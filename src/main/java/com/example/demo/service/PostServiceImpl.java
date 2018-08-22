@@ -50,4 +50,9 @@ public class PostServiceImpl implements PostService {
         Hashtag hash = hashtagRepository.findByHashtag(hashtag);
        return postRepository.findByHashtagsContains(hash);
     }
+
+    @Override
+    public Post getOne(Integer id) {
+        return postRepository.getOne(id);
+    }
 }

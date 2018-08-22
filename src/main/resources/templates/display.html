@@ -35,22 +35,18 @@
     </div>
 </nav>
 
-<main role="main" class="container">
-    <h1 class="text-center">Witaj na naszej stronie</h1>
-    <div class="row">
+<main role="main" class="container" style="margin-top: 100px">
+    <div class="row" >
 
-        <div class="col-lg-4 col-md-6 col-sm-12" style="margin-bottom: 20px" th:each="post: ${posts}" th:object="${post}">
-            <div class="hovereffect">
-                <img class="img-fluid" th:src="*{url}">
-                <div class="overlay">
-                    <h2  ><a th:each="hash: ${post.hashtags}" th:text="${hash.hashtag}+' '" th:href="@{/tag/{id}(id=${hash.hashtag})}"></a></h2>
-                    <p>
-                        <a th:href="@{/display/{postId}(postId=${post.id})}">Do zdjęcia</a>
-                    </p>
-                </div>
-            </div>
-
+        <div class="col-lg-12" style="margin: 10px">
+            <div th:utext="${post.name}"></div>
+            <img class="img-fluid" style="height: 80%" th:src="*{post.url}">
+            <div th:utext="${post.description}"></div>
+            <h2  ><a th:each="hash: ${post.hashtags}" th:text="${hash.hashtag}+' '" th:href="@{/tag/{id}(id=${hash.hashtag})}"></a></h2>
         </div>
+    </div>
+
+    </div>
     </div>
 </main><!-- /.container -->
 <!-- Bootstrap core JavaScript

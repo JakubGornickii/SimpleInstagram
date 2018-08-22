@@ -89,5 +89,15 @@ postService.savePost(post,hashtagService.toList(hashtags));
         modelAndView.addObject("posts",posts);
         return modelAndView;
     }
+
+    @RequestMapping(value = "/display/{postId}",method = RequestMethod.GET)
+    public ModelAndView display(@PathVariable("postId") Integer postId)
+    {
+        ModelAndView modelAndView = new ModelAndView("/display");
+        Post post = postService.getOne(postId);
+        modelAndView.addObject("post",post);
+        return modelAndView;
+
+    }
 }
 
