@@ -77,7 +77,8 @@ postService.savePost(post,hashtagService.toList(hashtags));
     @RequestMapping(value = "/search",method = RequestMethod.POST)
     public ModelAndView search(@RequestParam("tag") String tag)
     {
-        System.out.println(tag);
+
+
         ModelAndView modelAndView = new ModelAndView("index");
         List<Post> posts = postService.findByTag(tag);
         if (posts == null)
