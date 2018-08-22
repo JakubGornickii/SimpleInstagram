@@ -7,9 +7,9 @@
     <meta name="author" content="">
     <title>klon instagrama</title>
     <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
-    <link href="css/style.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
 </head>
 <body>
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
@@ -21,15 +21,15 @@
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="#">Strona główna <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/">Strona główna <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item active">
                 <a class="nav-link" href="/add">Dodaj posta <span class="sr-only">(current)</span></a>
             </li>
 
         </ul>
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="text" value="#" aria-label="Search">
+        <form class="form-inline my-2 my-lg-0" method="POST" th:action="@{/search}">
+            <input class="form-control mr-sm-2" type="text" value="#" name="tag">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Szukaj</button>
         </form>
     </div>
@@ -41,9 +41,9 @@
 
         <div class="col-lg-4 col-md-6 col-sm-12" style="margin-bottom: 20px" th:each="post: ${posts}" th:object="${post}">
             <div class="hovereffect">
-                <img  class="img-fluid" th:src="*{url}" th:alt="*{hashString}">
+                <img  class="img-fluid" th:src="*{url}">
                 <div class="overlay">
-                    <h2 th:text="*{hashString}"></h2>
+                    <h2  ><a th:each="hash: ${post.hashtags}" th:text="${hash.hashtag}+' '" th:href="@{/tag/{id}(id=${hash.hashtag})}"></a></h2>
                     <p>
                         <a href="/details">Do zdjęcia</a>
                     </p>

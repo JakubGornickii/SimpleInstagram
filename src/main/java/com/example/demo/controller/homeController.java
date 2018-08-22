@@ -1,14 +1,13 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.Hashtag;
 import com.example.demo.model.Post;
 import com.example.demo.service.HashtagService;
 import com.example.demo.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -22,6 +21,8 @@ public class homeController {
 
     @Autowired
     private PostService postService;
+
+
 
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public ModelAndView addPage() {
@@ -50,7 +51,7 @@ public class homeController {
             modelAndView.setViewName("addpost");
             return modelAndView;
         }
-postService.savePost(post,hashtagService.toList(hashtags),hashtags);
+postService.savePost(post,hashtagService.toList(hashtags));
 
         return modelAndView;
 
@@ -65,4 +66,28 @@ postService.savePost(post,hashtagService.toList(hashtags),hashtags);
         return modelAndView;
     }
 
+    @RequestMapping(value = "/tag/{id}",method = RequestMethod.GET)
+    public ModelAndView viewByHashtah(@PathVariable("id") String hashtag)
+    {
+        ModelAndView modelAndView = new ModelAndView("index");
+    List<Post> posts = postService.findByTag(hashtag);
+        modelAndView.addObject("posts",posts);
+        return modelAndView;
+    }
+    @RequestMapping(value = "/search",method = RequestMethod.POST)
+    public ModelAndView search(@RequestParam("tag") String tag)
+    {
+        System.out.println(tag);
+        ModelAndView modelAndView = new ModelAndView("index");
+        List<Post> posts = postService.findByTag(tag);
+        if (posts == null)
+        {
+
+            modelAndView.addObject( "errorMessage","Błąd nic nie znaleziono");
+            return modelAndView;
+        }
+        modelAndView.addObject("posts",posts);
+        return modelAndView;
+    }
 }
+
