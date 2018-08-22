@@ -20,6 +20,15 @@ public class Post {
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "post_hashtags", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "hash_id"))
     private List<Hashtag> hashtags;
+private String hashString;
+
+    public String getHashString() {
+        return hashString;
+    }
+
+    public void setHashString(String hashString) {
+        this.hashString = hashString;
+    }
 
     public Post() {
     }

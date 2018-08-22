@@ -22,7 +22,7 @@ public class PostServiceImpl implements PostService {
 
 
     @Override
-    public void savePost(Post post, List<String> hashtags) {
+    public void savePost(Post post, List<String> hashtags,String has) {
         List<Hashtag> postTags = new ArrayList<>();
         for (String hash : hashtags) {
             Hashtag hashtag = hashtagRepository.findByHashtag(hash);
@@ -36,7 +36,13 @@ public class PostServiceImpl implements PostService {
             }
         }
         post.setHashtags(postTags);
+        post.setHashString(has);
         postRepository.save(post);
 
+    }
+
+    @Override
+    public List<Post> getAllPost() {
+        return  postRepository.findAll();
     }
 }

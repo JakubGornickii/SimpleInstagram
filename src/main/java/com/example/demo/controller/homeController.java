@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 public class homeController {
@@ -47,15 +48,21 @@ public class homeController {
         if (!check.equals("true")) {
             modelAndView.addObject("checkHashtag", check);
             modelAndView.setViewName("addpost");
-            return modelAndView;}
-        System.out.println(post.getName());
-        System.out.println(post.getDescription());
-        System.out.println(post.getUrl());
-        System.out.println(hashtags);
-
+            return modelAndView;
+        }
+postService.savePost(post,hashtagService.toList(hashtags),hashtags);
 
         return modelAndView;
 
+    }
+
+    @RequestMapping(value = {"/", "/index"},method = RequestMethod.GET)
+    public ModelAndView homePage()
+    {
+        ModelAndView modelAndView = new ModelAndView("index");
+        List<Post> posts = postService.getAllPost();
+        modelAndView.addObject("posts",posts);
+        return modelAndView;
     }
 
 }
