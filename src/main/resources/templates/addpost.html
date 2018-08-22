@@ -42,31 +42,29 @@
           th:object="${post}">
         <div class="text-center form-group col-sm-12 col-md-6 offset-md-3 ">
             <label for="postName">Podaj nazwe posta</label>
-            <input type="text" name="name"
-                   class="form-control" id="postName" aria-describedby="postHelp"
-                   placeholder="Nazwa posta" >
+            <input style="margin-bottom: 20px" type="text" name="name"
+                   class="form-control" id="postName"
+                   placeholder="Nazwa posta" required>
             <label th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
                    class="validation-message"></label>
-            <small style="margin-bottom: 20px" id="postHelp" class="form-text text-muted">
-                Nazwa posta która będzie widoczna na stronie</small>
 
 
 
 
-            <label for="postUrl">Podaj nazwe posta</label>
+
+            <label for="postUrl">Podaj link url do zdjęcia</label>
+
             <input type="text" name="url"
                    class="form-control" id="postUrl" aria-describedby="postUrlhelp"
                    placeholder="Link do zdjęcia" required>
-            <label th:if="${#fields.hasErrors('url')}" th:errors="*{url}"
-                   class="validation-message"></label>
+
             <small style="margin-bottom: 20px" id="postUrlHelp" class="form-text text-muted">
                 Pełny link do zdjęcia https://www.w3schools.com/w3css/img_lights.jpg</small>
 
 
             <label for="postDescription">Opis posta</label>
             <textarea name="description" class="form-control" id="postDescription" rows="3" required></textarea>
-            <label th:if="${#fields.hasErrors('description')}" th:errors="*{description}"
-                   class="validation-message"></label>
+
 
 
             <label for="postHash">#Hashtagi#</label>
@@ -75,6 +73,12 @@
                    placeholder="#someTag #otherTag #oneMoreTag" required>
             <small style="margin-bottom: 20px" id="postHashHelp" class="form-text text-muted">
                 Wpisz hashtagi po spacji</small>
+
+            <div><label th:if="${#fields.hasErrors('description')}" th:errors="*{description}"
+                        class="validation-message"></label></div>
+            <div><label th:if="${#fields.hasErrors('url')}" th:errors="*{url}"
+                        class="validation-message"></label></div>
+            <div><label th:utext="${checkHashtag}" class="validation-message"></label></div>
 
             <button type="submit" class="btn btn-primary">Dodaj</button>
         </div>

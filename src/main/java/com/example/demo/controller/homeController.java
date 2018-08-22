@@ -1,6 +1,9 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Post;
+import com.example.demo.service.HashtagService;
+import com.example.demo.service.PostService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,12 +16,17 @@ import javax.validation.Valid;
 @Controller
 public class homeController {
 
+    @Autowired
+    private HashtagService hashtagService;
+
+    @Autowired
+    private PostService postService;
+
     @RequestMapping(value = "/add", method = RequestMethod.GET)
-    public ModelAndView addPage()
-    {
-        ModelAndView modelAndView =  new ModelAndView("/addpost");
+    public ModelAndView addPage() {
+        ModelAndView modelAndView = new ModelAndView("/addpost");
         Post post = new Post();
-        modelAndView.addObject("post",post);
+        modelAndView.addObject("post", post);
         return modelAndView;
     }
 
@@ -26,17 +34,27 @@ public class homeController {
     public ModelAndView addPost(@Valid Post post, BindingResult bindingResult, @RequestParam("hash") String hashtags)
 
     {
-        ModelAndView modelAndView =  new ModelAndView("redirect:/add");
+        ModelAndView modelAndView = new ModelAndView("redirect:/add");
         if (bindingResult.hasErrors()) {
+            String check = hashtagService.check(hashtags);
+            if (!check.equals("true")) {
+                modelAndView.addObject("checkHashtag", check);
+            }
             modelAndView.setViewName("addpost");
-        return modelAndView;}
-            System.out.println(post.getName());
-            System.out.println(post.getDescription());
-            System.out.println(post.getUrl());
-            System.out.println(hashtags);
-
-
             return modelAndView;
+        }
+        String check = hashtagService.check(hashtags);
+        if (!check.equals("true")) {
+            modelAndView.addObject("checkHashtag", check);
+            modelAndView.setViewName("addpost");
+            return modelAndView;}
+        System.out.println(post.getName());
+        System.out.println(post.getDescription());
+        System.out.println(post.getUrl());
+        System.out.println(hashtags);
+
+
+        return modelAndView;
 
     }
 

@@ -1,4 +1,5 @@
 package com.example.demo.model;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.URL;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -14,6 +15,7 @@ public class Post {
     @NotEmpty(message = "*Proszę wpisać nazwę")
     private String name;
     @NotEmpty(message = "*Proszę wpisać opis")
+    @Length(min = 10, message = "*Opis musi mieć co najmniej 10 znaków")
     private String description;
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "post_hashtags", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "hash_id"))
