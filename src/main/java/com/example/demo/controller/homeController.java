@@ -26,7 +26,7 @@ public class homeController {
 
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public ModelAndView addPage() {
-        ModelAndView modelAndView = new ModelAndView("/addpost");
+        ModelAndView modelAndView = new ModelAndView("addpost");
         Post post = new Post();
         modelAndView.addObject("post", post);
         return modelAndView;
@@ -93,7 +93,7 @@ postService.savePost(post,hashtagService.toList(hashtags));
     @RequestMapping(value = "/display/{postId}",method = RequestMethod.GET)
     public ModelAndView display(@PathVariable("postId") Integer postId)
     {
-        ModelAndView modelAndView = new ModelAndView("/display");
+        ModelAndView modelAndView = new ModelAndView("display");
         Post post = postService.getOne(postId);
         modelAndView.addObject("post",post);
         return modelAndView;
